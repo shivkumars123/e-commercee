@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop</title>
+    <title>Shop - Explore Products</title>
     <link rel="stylesheet" href="shop.css">
     <script type="module" src="./shop.js" defer></script>
 </head>
 <body>
     <header>
-        <h1>Shop Our Products</h1>
+        <div class="logo">
+            <h1>ShopEase</h1>
+        </div>
         <nav>
             <a href="homepage.html">Home</a>
             <a href="cart.html">Cart</a>
@@ -17,10 +19,19 @@
         </nav>
     </header>
     <main>
-        <div id="product-list"></div>
+        <section class="hero-section">
+            <h2>Discover Amazing Products</h2>
+            <p>Find the best deals and exclusive offers tailored just for you.</p>
+        </section>
+        <section class="product-section">
+            <h2>Our Products</h2>
+            <div class="product-grid" id="product-list">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </section>
     </main>
     <footer>
-        <p>&copy; 2024 Your E-commerce Site</p>
+        <p>&copy; 2025 ShopEase. All rights reserved.</p>
     </footer>
 </body>
 </html>

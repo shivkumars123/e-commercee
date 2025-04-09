@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-import { collection, doc, getDoc, getDocs, getFirestore } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+import { collection, getDocs, getFirestore } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
 
-// Firebase configuration object
+// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCfqutVADVzueXjxEdxnOFouUFTy5jDy4o",
     authDomain: "login-form-ee988.firebaseapp.com",
@@ -26,13 +26,13 @@ async function loadProducts() {
         const querySnapshot = await getDocs(productsCollection);
         if (querySnapshot.empty) {
             console.log("No products found.");
+            productList.innerHTML = `<p>No products available at the moment.</p>`;
             return;
         }
 
         querySnapshot.forEach((docSnapshot) => {
             const product = docSnapshot.data();
-            const productId = docSnapshot.id;
-            const productCard = createProductCard(product, productId);
+            const productCard = createProductCard(product);
             productList.appendChild(productCard);
         });
     } catch (error) {
@@ -41,41 +41,19 @@ async function loadProducts() {
 }
 
 // Create product card
-function createProductCard(product, productId) {
+function createProductCard(product) {
     const productCard = document.createElement('div');
     productCard.className = 'product-card';
     productCard.innerHTML = `
         <img src="${product.imageUrl}" alt="${product.name}">
         <h3>${product.name}</h3>
         <p>$${product.price.toFixed(2)}</p>
-        <button data-id="${productId}">Add to Cart</button>
+        <button>Add to Cart</button>
     `;
-    productCard.querySelector('button').addEventListener('click', handleAddToCart);
-    return productCard;
-}
-
-// Handle Add to Cart button clicks
-async function handleAddToCart(event) {
-    const button = event.target;
-    const productId = button.getAttribute('data-id');
-
-    const product = await getProductById(productId);
-    if (product) {
-        product.id = productId;
+    productCard.querySelector('button').addEventListener('click', () => {
         addToCart(product);
-    }
-}
-
-// Fetch product by ID
-async function getProductById(productId) {
-    const docRef = doc(db, 'products', productId);
-    try {
-        const docSnap = await getDoc(docRef);
-        return docSnap.exists() ? docSnap.data() : null;
-    } catch (error) {
-        console.error("Error getting document:", error);
-        return null;
-    }
+    });
+    return productCard;
 }
 
 // Add product to cart
@@ -90,7 +68,7 @@ function addToCart(product) {
     }
 
     localStorage.setItem('cart', JSON.stringify(cart));
-    alert('Product added to cart!');
+    alert(`${product.name} has been added to your cart!`);
 }
 
 // Load products when the script is loaded
