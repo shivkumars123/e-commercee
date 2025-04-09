@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping Address</title>
+    <link rel="stylesheet" href="address.css">
+    <script type="module" src="./address.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Enter Shipping Address</h1>
+        <nav>
+            <a href="homepage.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="profile.html">Profile</a>
+        </nav>
+    </header>
+    <main>
+        <form id="address-form">
+            <div>
+                <label for="full-name">Full Name:</label>
+                <input type="text" id="full-name" required>
+            </div>
+            <div>
+                <label for="address-line-1">Address Line 1:</label>
+                <input type="text" id="address-line-1" required>
+            </div>
+            <div>
+                <label for="address-line-2">Address Line 2:</label>
+                <input type="text" id="address-line-2">
+            </div>
+            <div>
+                <label for="city">City:</label>
+                <input type="text" id="city" required>
+            </div>
+            <div>
+                <label for="state">State:</label>
+                <input type="text" id="state" required>
+            </div>
+            <div>
+                <label for="postal-code">Postal Code:</label>
+                <input type="text" id="postal-code" required>
+            </div>
+            <div>
+                <label for="country">Country:</label>
+                <input type="text" id="country" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2024 Your E-commerce Site</p>
+    </footer>
+</body>
+</html>
