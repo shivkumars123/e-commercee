@@ -9,23 +9,30 @@
 </head>
 <body>
     <header>
-        <h1>Welcome to Our Store</h1>
+        <div class="logo">
+            <h1>ShopEase</h1>
+        </div>
         <nav>
             <a href="shop.html">Shop</a>
             <a href="cart.html">Cart</a>
             <a href="profile.html">Profile</a>
+            <button id="logout">Logout</button>
         </nav>
     </header>
     <main>
-        <div class="user-info">
-            <div>First Name: <span id="loggedUserFName"></span></div>
-            <div>Last Name: <span id="loggedUserLName"></span></div>
-            <div>Email: <span id="loggedUserEmail"></span></div>
-        </div>
-        <button id="logout">Logout</button>
+        <section class="welcome-section">
+            <h2>Welcome, <span id="loggedUserFName">User</span>!</h2>
+            <p>Explore the best deals and products tailored just for you.</p>
+        </section>
+        <section class="featured-products">
+            <h2>Featured Products</h2>
+            <div class="product-grid" id="featured-products">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </section>
     </main>
     <footer>
-        <p>&copy; 2024 Your E-commerce Site</p>
+        <p>&copy; 2025 ShopEase. All rights reserved.</p>
     </footer>
 </body>
 </html>
