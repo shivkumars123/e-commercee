@@ -34,7 +34,7 @@ function fetchCartItems() {
         itemElement.className = 'cart-item';
         itemElement.innerHTML = `
             <img src="${item.imageUrl}" alt="${item.name}">
-            <div>
+            <div class="cart-item-details">
                 <h3>${item.name}</h3>
                 <p>$${item.price.toFixed(2)} x ${item.quantity}</p>
             </div>
@@ -58,7 +58,7 @@ cartItemsContainer.addEventListener('click', (event) => {
     }
 });
 
-// Prevent multiple redirects by disabling the checkout button after the first click
+// Handle checkout process
 checkoutButton.addEventListener('click', async () => {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     
@@ -67,29 +67,22 @@ checkoutButton.addEventListener('click', async () => {
         return;
     }
 
-    // Disable the checkout button to prevent multiple clicks
-    checkoutButton.disabled = true;
-
     try {
-        const loggedInUserId = localStorage.getItem('loggedInUserId') || 'guest_user'; // Replace with actual user ID
+        const loggedInUserId = localStorage.getItem('loggedInUserId') || 'guest_user';
         const orderRef = doc(collection(db, 'orders'));
 
-        // Save the cart items to Firestore
         await setDoc(orderRef, {
             userId: loggedInUserId,
             items: cart,
             total: parseFloat(totalPriceElement.innerText),
             orderDate: new Date().toISOString(),
-            status: 'pending' // Mark order as pending until address is added
+            status: 'pending'
         });
 
-        // Store the order ID for later use in address.js
         localStorage.setItem('currentOrderId', orderRef.id);
-
-        // Clear the cart from localStorage
         localStorage.removeItem('cart');
 
-        // Redirect to the address input page
+        alert('Order placed successfully! Redirecting to address page...');
         window.location.href = 'address.html';
     } catch (error) {
         console.error("Error saving order to Firestore:", error);
@@ -98,4 +91,3 @@ checkoutButton.addEventListener('click', async () => {
 
 // Initialize cart items on page load
 fetchCartItems();
-
