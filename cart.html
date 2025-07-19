@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Cart</title>
-    <link rel="stylesheet" href="cart.css">
+    <title>ShopEase - Your Cart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="cart-new.css">
     <script type="module" src="./cart.js" defer></script>
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GDHSNDGRSL"></script>
@@ -17,30 +22,196 @@
 </script>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <h1>ShopEase</h1>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-shopping-bag"></i>
+                    ShopEase
+                </div>
+                <nav class="nav">
+                    <a href="homepage.html" class="nav-link">Home</a>
+                    <a href="shop.html" class="nav-link">Shop</a>
+                    <a href="#" class="nav-link active">
+                        <i class="fas fa-shopping-cart"></i>
+                        Cart
+                    </a>
+                    <a href="profile.html" class="nav-link">
+                        <i class="fas fa-user"></i>
+                        Profile
+                    </a>
+                </nav>
+            </div>
         </div>
-        <nav>
-            <a href="homepage.html">Home</a>
-            <a href="shop.html">Shop</a>
-            <a href="profile.html">Profile</a>
-        </nav>
     </header>
-    <main>
-        <section class="cart-section">
-            <h2>Your Shopping Cart</h2>
-            <div id="cart-items" class="cart-items">
-                <!-- Cart items will be dynamically loaded here -->
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>
+                    <i class="fas fa-shopping-cart"></i>
+                    Your Shopping Cart
+                </h1>
+                <p>Review your items and proceed to checkout</p>
             </div>
-            <div class="cart-summary">
-                <p>Total: $<span id="total-price">0.00</span></p>
-                <button id="checkout" class="btn">Proceed to Checkout</button>
+
+            <div class="cart-container">
+                <!-- Cart Items Section -->
+                <div class="cart-items-section">
+                    <div class="cart-header">
+                        <h2>Cart Items</h2>
+                        <button id="clear-cart" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-trash"></i>
+                            Clear Cart
+                        </button>
+                    </div>
+                    
+                    <div id="cart-items" class="cart-items">
+                        <!-- Cart items will be dynamically loaded here -->
+                    </div>
+                    
+                    <!-- Empty Cart State -->
+                    <div id="empty-cart" class="empty-cart hidden">
+                        <div class="empty-cart-content">
+                            <i class="fas fa-shopping-cart"></i>
+                            <h3>Your cart is empty</h3>
+                            <p>Looks like you haven't added any items to your cart yet.</p>
+                            <a href="shop.html" class="btn btn-primary btn-lg">
+                                <i class="fas fa-shopping-bag"></i>
+                                Start Shopping
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Summary Section -->
+                <div class="cart-summary-section">
+                    <div class="cart-summary card">
+                        <div class="card-header">
+                            <h3>Order Summary</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="summary-row">
+                                <span>Subtotal</span>
+                                <span id="subtotal">₹0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Shipping</span>
+                                <span id="shipping-cost">₹50.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tax (18% GST)</span>
+                                <span id="tax">₹0.00</span>
+                            </div>
+                            <div class="summary-divider"></div>
+                            <div class="summary-row total-row">
+                                <span>Total</span>
+                                <span id="total-price">₹0.00</span>
+                            </div>
+                            
+                            <!-- Promo Code Section -->
+                            <div class="promo-section">
+                                <div class="promo-input-group">
+                                    <input type="text" id="promo-code" placeholder="Enter promo code" class="promo-input">
+                                    <button id="apply-promo" class="btn btn-secondary btn-sm">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button id="checkout" class="btn btn-primary btn-lg">
+                                <i class="fas fa-lock"></i>
+                                Proceed to Checkout
+                            </button>
+                            <div class="security-badges">
+                                <div class="security-badge">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>Secure Checkout</span>
+                                </div>
+                                <div class="security-badge">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>SSL Protected</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Shipping Info -->
+                    <div class="shipping-info card mt-lg">
+                        <div class="card-body">
+                            <h4><i class="fas fa-truck"></i> Shipping Information</h4>
+                            <div class="shipping-options">
+                                <div class="shipping-option">
+                                    <input type="radio" id="standard" name="shipping" value="50" checked>
+                                    <label for="standard">
+                                        <strong>Standard Shipping (5-7 days)</strong>
+                                        <span>₹50.00</span>
+                                    </label>
+                                </div>
+                                <div class="shipping-option">
+                                    <input type="radio" id="express" name="shipping" value="150">
+                                    <label for="express">
+                                        <strong>Express Shipping (2-3 days)</strong>
+                                        <span>₹150.00</span>
+                                    </label>
+                                </div>
+                                <div class="shipping-option">
+                                    <input type="radio" id="overnight" name="shipping" value="300">
+                                    <label for="overnight">
+                                        <strong>Overnight Shipping (1 day)</strong>
+                                        <span>₹300.00</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
     </main>
-    <footer>
-        <p>&copy; 2025 ShopEase. All rights reserved.</p>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo mb-md">
+                        <i class="fas fa-shopping-bag"></i>
+                        ShopEase
+                    </div>
+                    <p>Your trusted partner for online shopping with quality products and exceptional service.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="homepage.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                        <li><a href="profile.html">Profile</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ShopEase. All rights reserved. Made with ❤️ for our customers.</p>
+            </div>
+        </div>
     </footer>
 </body>
 </html>

@@ -1,0 +1,16 @@
+{
+    "accessibility.signals.save": "off",
+    "accessibility.signals.format": "off", 
+    "accessibility.signals.lineHasError": "off",
+    "accessibility.signals.lineHasWarning": "off",
+    "accessibility.signals.lineHasInlineSuggestion": "off",
+    "accessibility.signals.terminalCommandFailed": "off",
+    "accessibility.signals.terminalCommandSucceeded": "off",
+    "accessibility.signals.terminalQuickFix": "off",
+    "accessibility.signals.onDebugBreak": "off",
+    "accessibility.signals.noInlayHints": "off",
+    "accessibility.signals.taskCompleted": "off",
+    "accessibility.signals.taskFailed": "off",
+    "accessibility.signals.chatRequestSent": "off",
+    "accessibility.signals.chatResponseReceived": "off"
+}
