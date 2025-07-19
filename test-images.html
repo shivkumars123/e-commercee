@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Drive Image Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-container { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        img { max-width: 300px; height: auto; margin: 10px 0; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Google Drive Image URL Test</h1>
+    
+    <div class="test-container">
+        <h3>Test 1: Original sharing URL</h3>
+        <p>https://drive.google.com/file/d/11GsQuqs4CGisUwO_n4PANVqwXPpMOaif/view?usp=sharing</p>
+        <img id="img1" src="https://drive.google.com/file/d/11GsQuqs4CGisUwO_n4PANVqwXPpMOaif/view?usp=sharing" 
+             onerror="document.getElementById('error1').innerHTML = 'FAILED'" 
+             onload="document.getElementById('success1').innerHTML = 'SUCCESS'">
+        <div id="error1" class="error"></div>
+        <div id="success1" class="success"></div>
+    </div>
+    
+    <div class="test-container">
+        <h3>Test 2: GoogleUserContent format</h3>
+        <p>https://lh3.googleusercontent.com/d/11GsQuqs4CGisUwO_n4PANVqwXPpMOaif=w800</p>
+        <img id="img2" src="https://lh3.googleusercontent.com/d/11GsQuqs4CGisUwO_n4PANVqwXPpMOaif=w800" 
+             onerror="document.getElementById('error2').innerHTML = 'FAILED'" 
+             onload="document.getElementById('success2').innerHTML = 'SUCCESS'">
+        <div id="error2" class="error"></div>
+        <div id="success2" class="success"></div>
+    </div>
+    
+    <div class="test-container">
+        <h3>Test 3: Drive UC format</h3>
+        <p>https://drive.google.com/uc?export=view&id=11GsQuqs4CGisUwO_n4PANVqwXPpMOaif</p>
+        <img id="img3" src="https://drive.google.com/uc?export=view&id=11GsQuqs4CGisUwO_n4PANVqwXPpMOaif" 
+             onerror="document.getElementById('error3').innerHTML = 'FAILED'" 
+             onload="document.getElementById('success3').innerHTML = 'SUCCESS'">
+        <div id="error3" class="error"></div>
+        <div id="success3" class="success"></div>
+    </div>
+    
+    <div class="test-container">
+        <h3>Test 4: Drive Thumbnail format</h3>
+        <p>https://drive.google.com/thumbnail?id=11GsQuqs4CGisUwO_n4PANVqwXPpMOaif&sz=w800</p>
+        <img id="img4" src="https://drive.google.com/thumbnail?id=11GsQuqs4CGisUwO_n4PANVqwXPpMOaif&sz=w800" 
+             onerror="document.getElementById('error4').innerHTML = 'FAILED'" 
+             onload="document.getElementById('success4').innerHTML = 'SUCCESS'">
+        <div id="error4" class="error"></div>
+        <div id="success4" class="success"></div>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            console.log('Image test results after 3 seconds:');
+            for (let i = 1; i <= 4; i++) {
+                const img = document.getElementById(`img${i}`);
+                const status = img.complete && img.naturalWidth > 0 ? 'SUCCESS' : 'FAILED';
+                console.log(`Test ${i}: ${status}`);
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

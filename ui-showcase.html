@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEase - UI Showcase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="global.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-lg);
+        }
+        
+        .showcase-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius-2xl);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 800px;
+            padding: var(--spacing-3xl);
+            text-align: center;
+        }
+        
+        .showcase-title {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .showcase-subtitle {
+            color: var(--gray-600);
+            font-size: 1.25rem;
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .pages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-3xl);
+        }
+        
+        .page-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+            border: 2px solid transparent;
+        }
+        
+        .page-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-color);
+        }
+        
+        .page-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .page-description {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .page-link {
+            display: inline-block;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .page-link:hover {
+            color: var(--primary-dark);
+        }
+        
+        .features-list {
+            background: var(--gray-50);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-2xl);
+            text-align: left;
+        }
+        
+        .features-list h3 {
+            color: var(--gray-800);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+        
+        .features-list ul {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-sm);
+        }
+        
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            color: var(--gray-700);
+        }
+        
+        .features-list li i {
+            color: var(--success-color);
+            font-size: 0.875rem;
+        }
+        
+        .version-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-md);
+            border-radius: var(--border-radius-xl);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        @media (max-width: 768px) {
+            .pages-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .showcase-title {
+                font-size: 2rem;
+            }
+            
+            .features-list ul {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="showcase-container">
+        <div class="version-badge">
+            <i class="fas fa-rocket"></i>
+            New UI Version 2.0
+        </div>
+        
+        <h1 class="showcase-title">ShopEase</h1>
+        <p class="showcase-subtitle">Modern E-Commerce Experience with Completely Redesigned UI</p>
+        
+        <div class="features-list">
+            <h3>🎨 New Features & Improvements</h3>
+            <ul>
+                <li><i class="fas fa-check"></i> Modern gradient designs</li>
+                <li><i class="fas fa-check"></i> Responsive layout system</li>
+                <li><i class="fas fa-check"></i> Enhanced typography</li>
+                <li><i class="fas fa-check"></i> Smooth animations</li>
+                <li><i class="fas fa-check"></i> Improved accessibility</li>
+                <li><i class="fas fa-check"></i> Mobile-first approach</li>
+                <li><i class="fas fa-check"></i> Professional color palette</li>
+                <li><i class="fas fa-check"></i> Interactive elements</li>
+            </ul>
+        </div>
+        
+        <div class="pages-grid">
+            <div class="page-card">
+                <div class="page-icon">
+                    <i class="fas fa-sign-in-alt"></i>
+                </div>
+                <h3 class="page-title">Authentication</h3>
+                <p class="page-description">Beautiful sign-in/sign-up with glassmorphism design</p>
+                <a href="index.html" class="page-link">View Page →</a>
+            </div>
+            
+            <div class="page-card">
+                <div class="page-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3 class="page-title">Homepage</h3>
+                <p class="page-description">Hero section, features, and product showcase</p>
+                <a href="homepage.html" class="page-link">View Page →</a>
+            </div>
+            
+            <div class="page-card">
+                <div class="page-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <h3 class="page-title">Shop</h3>
+                <p class="page-description">Product grid with advanced filters and search</p>
+                <a href="shop.html" class="page-link">View Page →</a>
+            </div>
+            
+            <div class="page-card">
+                <div class="page-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h3 class="page-title">Cart</h3>
+                <p class="page-description">Enhanced checkout experience with order summary</p>
+                <a href="cart.html" class="page-link">View Page →</a>
+            </div>
+            
+            <div class="page-card">
+                <div class="page-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3 class="page-title">Profile</h3>
+                <p class="page-description">Comprehensive user dashboard with multiple sections</p>
+                <a href="profile.html" class="page-link">View Page →</a>
+            </div>
+            
+            <div class="page-card">
+                <div class="page-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3 class="page-title">Address</h3>
+                <p class="page-description">Address management (original design)</p>
+                <a href="address.html" class="page-link">View Page →</a>
+            </div>
+        </div>
+        
+        <div style="margin-top: var(--spacing-xl); padding-top: var(--spacing-xl); border-top: 1px solid var(--gray-200);">
+            <p style="color: var(--gray-600); font-size: 0.875rem;">
+                <i class="fas fa-palette"></i>
+                Complete UI overhaul with modern design principles • Built with love ❤️
+            </p>
+        </div>
+    </div>
+</body>
+</html>

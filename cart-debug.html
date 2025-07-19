@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .debug { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        pre { background: #fff; padding: 10px; border: 1px solid #ccc; overflow: auto; }
+    </style>
+</head>
+<body>
+    <h1>Cart Debug Tool</h1>
+    
+    <div class="debug">
+        <h3>Cart Contents</h3>
+        <div id="cart-info"></div>
+    </div>
+    
+    <div class="debug">
+        <h3>Image Test</h3>
+        <div id="image-test"></div>
+    </div>
+
+    <script>
+        // Check cart contents
+        const cartData = localStorage.getItem('cart');
+        const cart = JSON.parse(cartData) || [];
+        
+        document.getElementById('cart-info').innerHTML = `
+            <p><strong>Raw cart data:</strong></p>
+            <pre>${cartData || 'No cart data found'}</pre>
+            <p><strong>Parsed cart:</strong> ${cart.length} items</p>
+            ${cart.map((item, index) => `
+                <div style="border: 1px solid #ccc; padding: 10px; margin: 5px 0;">
+                    <strong>Item ${index + 1}: ${item.name}</strong><br>
+                    <strong>Price:</strong> $${item.price}<br>
+                    <strong>Quantity:</strong> ${item.quantity}<br>
+                    <strong>Image URL:</strong> ${item.imageUrl || 'No image URL'}<br>
+                    <strong>Category:</strong> ${item.category || 'No category'}
+                </div>
+            `).join('')}
+        `;
+
+        // Test cart images if any exist
+        if (cart.length > 0) {
+            const testHTML = cart.map((item, index) => {
+                if (!item.imageUrl) return '';
+                
+                // Convert Google Drive URL like in cart.js
+                function convertImageLink(url) {
+                    if (!url || !url.includes('drive.google.com')) return url;
+                    
+                    let fileId = null;
+                    let fileIdMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]{25,})/);
+                    if (fileIdMatch) {
+                        fileId = fileIdMatch[1];
+                    } else {
+                        fileIdMatch = url.match(/id=([a-zA-Z0-9_-]{25,})/);
+                        if (fileIdMatch) {
+                            fileId = fileIdMatch[1];
+                        } else {
+                            fileIdMatch = url.match(/[-\w]{25,}/);
+                            if (fileIdMatch) {
+                                fileId = fileIdMatch[0];
+                            }
+                        }
+                    }
+                    
+                    if (fileId) {
+                        return `https://lh3.googleusercontent.com/d/${fileId}=w800`;
+                    }
+                    return url;
+                }
+                
+                const convertedUrl = convertImageLink(item.imageUrl);
+                
+                return `
+                    <div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">
+                        <h4>${item.name}</h4>
+                        <p><strong>Original:</strong> ${item.imageUrl}</p>
+                        <p><strong>Converted:</strong> ${convertedUrl}</p>
+                        <img src="${convertedUrl}" 
+                             style="max-width: 150px; height: auto; border: 1px solid #ddd;" 
+                             onload="console.log('✅ Loaded:', '${item.name}'); this.nextElementSibling.innerHTML = '✅ Loaded successfully'" 
+                             onerror="console.log('❌ Failed:', '${item.name}'); this.nextElementSibling.innerHTML = '❌ Failed to load'">
+                        <div style="color: #666; font-size: 0.9em;">Loading...</div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('image-test').innerHTML = testHTML;
+        } else {
+            document.getElementById('image-test').innerHTML = '<p>No items in cart to test</p>';
+        }
+    </script>
+</body>
+</html>

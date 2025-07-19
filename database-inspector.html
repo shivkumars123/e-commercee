@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Database Inspector</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .product { border: 1px solid #ccc; margin: 10px 0; padding: 15px; border-radius: 5px; }
+        .working { border-color: #4CAF50; background-color: #f9fff9; }
+        .broken { border-color: #f44336; background-color: #fff9f9; }
+        .testing { border-color: #ff9800; background-color: #fffaf0; }
+        .url { font-family: monospace; background: #f5f5f5; padding: 5px; margin: 5px 0; word-break: break-all; }
+        .status { font-weight: bold; margin: 5px 0; }
+        img { max-width: 200px; height: auto; margin: 10px 0; }
+        .converted-url { color: #2196F3; }
+        .original-url { color: #666; }
+        button { padding: 8px 16px; margin: 5px; border: none; border-radius: 4px; cursor: pointer; }
+        .fix-btn { background: #4CAF50; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Firebase Database Inspector</h1>
+    <p>This tool will help you identify which Google Drive images need to be properly shared.</p>
+    <button onclick="testAllImages()" style="background: #2196F3; color: white; padding: 10px 20px;">Test All Images</button>
+    <div id="results"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCfqutVADVzueXjxEdxnOFouUFTy5jDy4o",
+            authDomain: "login-form-ee988.firebaseapp.com",
+            projectId: "login-form-ee988",
+            storageBucket: "login-form-ee988.appspot.com",
+            messagingSenderId: "810718956570",
+            appId: "1:810718956570:web:fba54ec6ad3f6d6d7e15a3",
+            measurementId: "G-EE1LXX8PLG"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        function convertImageLink(url) {
+            if (!url) return url;
+            
+            if (url.includes('drive.google.com')) {
+                let fileId = null;
+                let fileIdMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]{25,})/);
+                if (fileIdMatch) {
+                    fileId = fileIdMatch[1];
+                } else {
+                    fileIdMatch = url.match(/id=([a-zA-Z0-9_-]{25,})/);
+                    if (fileIdMatch) {
+                        fileId = fileIdMatch[1];
+                    } else {
+                        fileIdMatch = url.match(/[-\w]{25,}/);
+                        if (fileIdMatch) {
+                            fileId = fileIdMatch[0];
+                        }
+                    }
+                }
+                
+                if (fileId) {
+                    return `https://lh3.googleusercontent.com/d/${fileId}=w800`;
+                }
+            }
+            return url;
+        }
+
+        window.testAllImages = async function() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<p>Loading products from Firebase...</p>';
+            
+            try {
+                const querySnapshot = await getDocs(collection(db, "products"));
+                const products = [];
+                querySnapshot.forEach((doc) => {
+                    products.push({ id: doc.id, ...doc.data() });
+                });
+
+                resultsDiv.innerHTML = '<h2>Testing Images...</h2>';
+
+                for (let product of products) {
+                    const productDiv = document.createElement('div');
+                    productDiv.className = 'product testing';
+                    
+                    const originalUrl = product.imageUrl || 'No image URL';
+                    const convertedUrl = convertImageLink(product.imageUrl);
+                    
+                    productDiv.innerHTML = `
+                        <h3>${product.name || 'Unnamed Product'}</h3>
+                        <div class="status">Status: Testing...</div>
+                        <div><strong>Original URL:</strong></div>
+                        <div class="url original-url">${originalUrl}</div>
+                        <div><strong>Converted URL:</strong></div>
+                        <div class="url converted-url">${convertedUrl}</div>
+                        <img id="img-${product.id}" src="${convertedUrl}" style="display:none;">
+                        <div id="result-${product.id}"></div>
+                    `;
+                    
+                    resultsDiv.appendChild(productDiv);
+
+                    // Test the image
+                    const img = document.getElementById(`img-${product.id}`);
+                    const resultDiv = document.getElementById(`result-${product.id}`);
+                    
+                    img.onload = function() {
+                        productDiv.className = 'product working';
+                        productDiv.querySelector('.status').innerHTML = 'Status: ✅ Working';
+                        this.style.display = 'block';
+                        resultDiv.innerHTML = '<p style="color: #4CAF50;">✅ Image loads successfully!</p>';
+                    };
+                    
+                    img.onerror = function() {
+                        productDiv.className = 'product broken';
+                        productDiv.querySelector('.status').innerHTML = 'Status: ❌ Broken';
+                        resultDiv.innerHTML = `
+                            <p style="color: #f44336;">❌ Image failed to load</p>
+                            <p><strong>Solutions:</strong></p>
+                            <ol>
+                                <li>Open the <a href="${originalUrl}" target="_blank">original Google Drive link</a></li>
+                                <li>Right-click the file → Share → Anyone with the link</li>
+                                <li>Make sure permission is set to "Viewer"</li>
+                                <li>Copy the sharing link and update Firebase</li>
+                            </ol>
+                            <button class="fix-btn" onclick="window.open('${originalUrl}', '_blank')">
+                                Open in Google Drive
+                            </button>
+                        `;
+                    };
+                }
+
+            } catch (error) {
+                resultsDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+                console.error("Error fetching products:", error);
+            }
+        };
+
+        // Auto-test on page load
+        window.addEventListener('load', () => {
+            setTimeout(testAllImages, 1000);
+        });
+    </script>
+</body>
+</html>

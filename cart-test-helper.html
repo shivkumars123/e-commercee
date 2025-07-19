@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Test Item to Cart</title>
+</head>
+<body>
+    <h1>Cart Test Helper</h1>
+    <button onclick="addTestItem()">Add Test Item to Cart</button>
+    <button onclick="clearCart()">Clear Cart</button>
+    <button onclick="viewCart()">View Cart</button>
+    
+    <div id="status"></div>
+
+    <script>
+        function addTestItem() {
+            const testItem = {
+                id: 'test-1',
+                name: 'Test Product',
+                price: 999.99,
+                quantity: 1,
+                category: 'Test',
+                imageUrl: 'https://drive.google.com/file/d/11GsQuqs4CGisUwO_n4PANVqwXPpMOaif/view?usp=sharing'
+            };
+            
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Check if item already exists
+            const existingIndex = cart.findIndex(item => item.id === testItem.id);
+            if (existingIndex !== -1) {
+                cart[existingIndex].quantity += 1;
+            } else {
+                cart.push(testItem);
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            document.getElementById('status').innerHTML = `✅ Added test item to cart. Total items: ${cart.length}`;
+            console.log('Cart updated:', cart);
+        }
+        
+        function clearCart() {
+            localStorage.removeItem('cart');
+            document.getElementById('status').innerHTML = '🗑️ Cart cleared';
+        }
+        
+        function viewCart() {
+            window.open('cart.html', '_blank');
+        }
+    </script>
+</body>
+</html>
